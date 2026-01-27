@@ -1,0 +1,7 @@
+{
+  "buildCommand": "cd les-grignotons && npm run build",
+  "devCommand": "cd les-grignotons && npm run dev",
+  "installCommand": "cd les-grignotons && npm install",
+  "framework": "nextjs",
+  "outputDirectory": "les-grignotons/.next"
+}
