@@ -1,0 +1,61 @@
+@import "tailwindcss";
+
+/* Variables de couleurs personnalisées pour Tailwind v4 */
+@theme {
+  --color-primary: #6b9f6e;
+  --color-primary-dark: #4a7c4d;
+  --color-primary-light: #a8d5ab;
+  --color-secondary: #fff9f0;
+  --color-accent: #f4b393;
+  --color-accent-light: #ffddc7;
+  --color-earth: #d4a574;
+  --color-beige: #faf3e9;
+}
+
+/* Style global du body */
+body {
+  background-color: #FFF9F0;
+  color: #2d3748;
+  scroll-behavior: smooth;
+}
+
+/* Amélioration de la lisibilité du texte et smooth scroll */
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+/* Animations globales */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.6s ease-out;
+}
+
+/* Style pour les boutons focus (accessibilité) */
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Amélioration des ombres pour plus de profondeur */
+.shadow-warm {
+  box-shadow: 0 4px 6px -1px rgba(107, 159, 110, 0.1), 
+              0 2px 4px -1px rgba(107, 159, 110, 0.06);
+}
+
+.shadow-warm-lg {
+  box-shadow: 0 10px 15px -3px rgba(107, 159, 110, 0.1), 
+              0 4px 6px -2px rgba(107, 159, 110, 0.05);
+}
