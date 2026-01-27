@@ -90,6 +90,7 @@ export async function getAvailableAnimals(): Promise<Animal[]> {
 export async function getCategories(): Promise<Category[]> {
   const query = `*[_type == "category"] | order(order asc, name asc) {
     _id,
+    _updatedAt,
     name,
     slug,
     description,
@@ -211,6 +212,7 @@ export async function getArticles(category?: Article['category']): Promise<Artic
   const query = `${filter} | order(publishedAt desc) {
     _id,
     _type,
+    _updatedAt,
     title,
     slug,
     mainImage {
