@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Section from '@/components/ui/Section'
 import { getCategories } from '@/lib/sanity/queries'
 import CategoryCard from '@/components/ui/CategoryCard'
+import AnimalWarning from '@/components/ui/AnimalWarning'
 
 export const metadata: Metadata = {
   title: 'Adoptions',
@@ -40,6 +41,13 @@ export default async function AdoptionPage() {
             Découvrez nos différentes races de lapins et cobayes.
             Chaque animal est suivi, socialisé et prêt à rejoindre son nouveau foyer.
           </p>
+        </div>
+      </Section>
+
+      {/* Avertissement important */}
+      <Section>
+        <div className="max-w-4xl mx-auto">
+          <AnimalWarning />
         </div>
       </Section>
 

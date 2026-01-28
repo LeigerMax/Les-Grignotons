@@ -8,6 +8,8 @@ import ImageGallery from '@/components/home/ImageGallery'
 import ContactSection from '@/components/home/ContactSection'
 import { getAvailableAnimals, getTestimonials, getStats } from '@/lib/sanity/queries'
 import { OrganizationSchema } from '@/components/seo/JsonLd'
+import AnimalWarning from '@/components/ui/AnimalWarning'
+
 
 export const revalidate = 60 // Revalider toutes les 60 secondes
 
@@ -85,6 +87,13 @@ export default async function HomePage() {
           </p>
         )}
       </Section>
+      
+      {/* Avertissement important */}
+      <Section>
+        <div className="max-w-4xl mx-auto">
+          <AnimalWarning />
+        </div>
+      </Section>
 
       {/* Valeurs & Engagement */}
       <Section
@@ -92,26 +101,7 @@ export default async function HomePage() {
         subtitle="Un élevage responsable et transparent"
         className="bg-beige"
       >
-        {/* Avertissement légal */}
-        <div className="mb-12 p-6 bg-white rounded-lg shadow-lg border-l-4 border-primary">
-          <div className="flex gap-4">
-            <div className="flex-shrink-0 text-4xl">⚠️</div>
-            <div>
-              <h3 className="font-bold text-lg text-gray-900 mb-3">Information importante</h3>
-              <p className="text-gray-700 mb-3">
-                <strong>Un animal n'est pas un jouet.</strong> L'achat ou l'adoption d'un animal se fait en pleine conscience 
-                des responsabilités qui incombent à son nouveau propriétaire. L'abandon d'un animal constitue une infraction 
-                susceptible de poursuites pénales ou administratives.
-              </p>
-              <p className="text-gray-700">
-                Pour toute adoption, tous les conseils pour accueillir votre nouveau compagnon se trouvent dans la rubrique 
-                <Button href="/conseils" variant="outline" className="inline-flex mx-2 px-4 py-1 text-sm">
-                   Conseils & Guides
-                </Button>
-              </p>
-            </div>
-          </div>
-        </div> 
+
 
         <div className="grid md:grid-cols-3 gap-8">
           <div className="text-center p-8 rounded-2xl bg-white shadow-lg hover:shadow-xl transition-shadow">
@@ -134,6 +124,9 @@ export default async function HomePage() {
             <p className="text-gray-700">
               Nous vous conseillons avant et après l'adoption pour une intégration réussie.
             </p>
+                  <Button href="/conseils" variant="outline" className="inline-flex mx-2 px-4 py-1 text-sm">
+                   Conseils & Guides
+                </Button>
           </div>
         </div>
       </Section>

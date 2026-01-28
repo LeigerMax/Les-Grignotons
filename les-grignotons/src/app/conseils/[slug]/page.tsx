@@ -111,6 +111,20 @@ export default async function ArticlePage({ params }: Props) {
       {/* Hero avec image principale */}
       <Section className="bg-gradient-to-br from-primary/10 to-accent/10 py-12">
         <div className="max-w-4xl mx-auto">
+          <Link 
+            href="/conseils" 
+            className="inline-flex items-center gap-2 text-sm mb-4 text-gray-700 hover:text-primary transition-colors group"
+          >
+            <svg 
+              className="w-5 h-5 transition-transform group-hover:-translate-x-1" 
+              fill="none" 
+              viewBox="0 0 24 24" 
+              stroke="currentColor"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+            Retour aux conseils
+          </Link>
           <div className="mb-4">
             <span className="inline-block px-4 py-2 bg-primary text-white rounded-full text-sm font-semibold">
               {categoryLabels[article.category]}

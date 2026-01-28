@@ -7,6 +7,7 @@ import { getOptimizedImageUrl } from '@/lib/sanity/client'
 import Section from '@/components/ui/Section'
 import CategoryAnimalsClient from '@/components/categories/CategoryAnimalsClient'
 import { BreadcrumbSchema } from '@/components/seo/JsonLd'
+import AnimalWarning from '@/components/ui/AnimalWarning'
 
 export const revalidate = 60
 
@@ -88,13 +89,20 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
           {/* Texte */}
           <div>
-            <nav className="text-sm mb-4 opacity-90">
-              <Link href="/categories" className="hover:underline">
-                Catégories
-              </Link>
-              <span className="mx-2">/</span>
-              <span>{category.name}</span>
-            </nav>
+            <Link 
+              href="/adoption" 
+              className="inline-flex items-center gap-2 text-sm mb-4 opacity-90 hover:opacity-100 transition-opacity group"
+            >
+              <svg 
+                className="w-5 h-5 transition-transform group-hover:-translate-x-1" 
+                fill="none" 
+                viewBox="0 0 24 24" 
+                stroke="currentColor"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+              Retour aux catégories
+            </Link>
             
             <h1 className="text-4xl md:text-5xl font-extrabold mb-4">
               {category.name}
@@ -117,6 +125,13 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
               />
             </div>
           )}
+        </div>
+      </Section>
+
+      {/* Avertissement important */}
+      <Section>
+        <div className="max-w-4xl mx-auto">
+          <AnimalWarning />
         </div>
       </Section>
 
