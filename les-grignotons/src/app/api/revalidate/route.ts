@@ -1,57 +1,56 @@
 import { revalidatePath } from 'next/cache'
 import { NextRequest, NextResponse } from 'next/server'
 
-/**
- * API Route pour revalider le cache Next.js depuis Sanity Webhooks
- * 
- * Configuration dans Sanity :
- * 1. Aller dans Settings → API → Webhooks
- * 2. Créer un webhook avec l'URL : https://votre-domaine.com/api/revalidate
- * 3. Ajouter un secret (SANITY_REVALIDATE_SECRET)
- * 4. Sélectionner les événements : Create, Update, Delete
- */
-
 export async function POST(request: NextRequest) {
   try {
-    // Vérifier le secret pour la sécurité
+    // 1. Vérification du secret dans l'URL
     const secret = request.nextUrl.searchParams.get('secret')
     
     if (secret !== process.env.SANITY_REVALIDATE_SECRET) {
       return NextResponse.json({ message: 'Invalid secret' }, { status: 401 })
     }
 
-    // Parser le body du webhook
-    const body = await request.json()
-    const documentType = body._type
+    // 2. Parser le body en toute sécurité
+    let body;
+    try {
+      body = await request.json()
+    } catch (e) {
+      return NextResponse.json({ message: 'Bad Request: No JSON Body' }, { status: 400 })
+    }
 
-    // Revalider selon le type de document
+    const documentType = body?._type
+
+    if (!documentType) {
+        return NextResponse.json({ message: 'No document type found in webhook body' }, { status: 400 })
+    }
+
+    console.log(`🔄 Revalidating type: ${documentType}`)
+
+    // 3. Revalidation
     switch (documentType) {
       case 'animal':
-        revalidatePath('/adoption', 'layout')
-        revalidatePath('/favoris', 'page')
-        revalidatePath('/', 'page')
-        console.log('✅ Revalidated: animals')
+        revalidatePath('/adoption', 'layout') // Layout revalide tout ce qu'il y a en dessous
+        revalidatePath('/favoris')
+        revalidatePath('/')
         break
       
       case 'testimonial':
-        revalidatePath('/temoignages', 'page')
-        revalidatePath('/', 'page')
-        console.log('✅ Revalidated: testimonials')
+        revalidatePath('/temoignages')
+        revalidatePath('/')
         break
       
       case 'category':
         revalidatePath('/adoption', 'layout')
         revalidatePath('/categories', 'layout')
-        console.log('✅ Revalidated: categories')
         break
       
       case 'article':
         revalidatePath('/conseils', 'layout')
-        console.log('✅ Revalidated: articles')
         break
       
       default:
-        console.log(`⚠️ Unknown document type: ${documentType}`)
+        // Optionnel : Revalider tout le site si le type est inconnu, ou ne rien faire
+        console.log(`⚠️ Unhandled document type: ${documentType}`)
     }
 
     return NextResponse.json({ 
@@ -59,10 +58,11 @@ export async function POST(request: NextRequest) {
       type: documentType,
       now: Date.now() 
     })
+
   } catch (err) {
     console.error('❌ Error revalidating:', err)
     return NextResponse.json({ 
-      message: 'Error revalidating', 
+      message: 'Server Error', 
       error: err instanceof Error ? err.message : 'Unknown error' 
     }, { status: 500 })
   }
