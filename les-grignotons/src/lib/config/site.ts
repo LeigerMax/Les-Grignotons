@@ -4,7 +4,7 @@
  */
 
 // URL du site - À mettre à jour avec l'URL définitive
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://les-grignotons-five.vercel.app/'
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://les-grignotons-elevage.vercel.app/'
 
 // Informations du site
 export const SITE_CONFIG = {
