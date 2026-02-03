@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Animal } from '@/types/animals'
+import { Animal } from '@/types/sanity'
 import AnimalCard from '@/components/animals/AnimalCard'
 
 interface CategoryAnimalsClientProps {
