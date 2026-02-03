@@ -1,14 +1,22 @@
+import dynamic from 'next/dynamic'
 import Section from '@/components/ui/Section'
 import Button from '@/components/ui/Button'
 import AnimalCard from '@/components/animals/AnimalCard'
 import TestimonialCard from '@/components/ui/TestimonialCard'
 import HeroSection from '@/components/home/HeroSection'
 import OfficialCertificate from '@/components/home/OfficialCertificate'
-import ImageGallery from '@/components/home/ImageGallery'
-import ContactSection from '@/components/home/ContactSection'
 import { getAvailableAnimals, getTestimonials, getStats } from '@/lib/sanity/queries'
 import { OrganizationSchema } from '@/components/seo/JsonLd'
 import AnimalWarning from '@/components/ui/AnimalWarning'
+
+// Lazy loading des composants lourds
+const ImageGallery = dynamic(() => import('@/components/home/ImageGallery'), {
+  loading: () => <div className="py-20 bg-gradient-to-b from-white to-beige"><div className="max-w-7xl mx-auto px-4 text-center"><p className="text-gray-500">Chargement de la galerie...</p></div></div>
+})
+
+const ContactSection = dynamic(() => import('@/components/home/ContactSection'), {
+  loading: () => <div className="py-20 bg-gradient-to-br from-primary/5 to-white"><div className="max-w-7xl mx-auto px-4 text-center"><p className="text-gray-500">Chargement des informations de contact...</p></div></div>
+})
 
 
 
