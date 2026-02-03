@@ -206,7 +206,9 @@ export async function getTestimonials(limit = 10): Promise<Testimonial[]> {
     isVisible
   }`
   
-  return sanityClient.fetch<Testimonial[]>(query)
+  return sanityClient.fetch<Testimonial[]>(query, {}, {
+    next: { tags: ['testimonials'] }
+  })
 }
 
 // ===== ARTICLES =====
@@ -238,7 +240,9 @@ export async function getArticles(category?: Article['category']): Promise<Artic
     publishedAt
   }`
   
-  return sanityClient.fetch<Article[]>(query)
+  return sanityClient.fetch<Article[]>(query, {}, {
+    next: { tags: ['articles'] }
+  })
 }
 
 /**
