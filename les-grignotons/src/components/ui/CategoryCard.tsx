@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { Category } from '@/types/animals'
+import { Category } from '@/types/sanity'
 import { getOptimizedImageUrl } from '@/lib/sanity/client'
 
 interface CategoryCardProps {

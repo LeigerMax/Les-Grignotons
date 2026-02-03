@@ -1,4 +1,5 @@
 import { Metadata } from 'next'
+import { Suspense } from 'react'
 import Section from '@/components/ui/Section'
 import { getArticles } from '@/lib/sanity/queries'
 import Link from 'next/link'
@@ -63,7 +64,9 @@ export default async function AdvicesPage() {
 
       {/* Message d'alerte si article non visible */}
       <Section className="bg-white pt-8 pb-0">
-        <ConseilsAlert />
+        <Suspense fallback={<div />}>
+          <ConseilsAlert />
+        </Suspense>
       </Section>
 
       {/* Articles par catégorie */}
