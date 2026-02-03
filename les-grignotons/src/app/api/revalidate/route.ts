@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ message: 'No document type found in webhook body' }, { status: 400 })
     }
 
-    console.log(`🔄 Revalidating type: ${documentType}`)
+    console.log(`Revalidating type: ${documentType}`)
 
     // 3. Revalidation
     switch (documentType) {
@@ -32,6 +32,7 @@ export async function POST(request: NextRequest) {
         revalidatePath('/adoption', 'layout') // Layout revalide tout ce qu'il y a en dessous
         revalidatePath('/favoris')
         revalidatePath('/')
+        revalidatePath('/categories', 'layout')
         break
       
       case 'testimonial':
