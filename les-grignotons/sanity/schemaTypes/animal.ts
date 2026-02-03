@@ -16,11 +16,12 @@ export default defineType({
       name: 'species',
       title: 'Espèce',
       type: 'string',
-      description: 'Choisir Lapin ou Cobaye',
+      description: 'Choisir Lapin, Cobaye ou Autre',
       options: {
         list: [
           { title: 'Lapin', value: 'Lapin' },
-          { title: 'Cobaye', value: 'Cobaye' }
+          { title: 'Cobaye', value: 'Cobaye' },
+          { title: 'Autre', value: 'Autre' }
         ],
         layout: 'radio'
       },
@@ -61,7 +62,7 @@ export default defineType({
       type: 'text',
       description: 'Décrivez le caractère, les particularités de l\'animal',
       rows: 5,
-      validation: (Rule) => Rule.required().min(20).max(500).error('La description doit faire entre 20 et 500 caractères')
+      validation: (Rule) => Rule.required().min(20).error('La description doit faire au moins 20 caractères')
     }),
     defineField({
       name: 'image',

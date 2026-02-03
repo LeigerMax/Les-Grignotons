@@ -28,7 +28,7 @@ export default defineType({
       type: 'text',
       rows: 5,
       description: 'Texte descriptif affiché en haut de la page catégorie (particularités, comportement, soins...)',
-      validation: (Rule) => Rule.required().min(50).max(500).error('Entre 50 et 500 caractères'),
+      validation: (Rule) => Rule.required().min(50).error('Minimum 50 caractères'),
     }),
     defineField({
       name: 'image',
