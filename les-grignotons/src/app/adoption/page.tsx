@@ -4,6 +4,7 @@ import Section from '@/components/ui/Section'
 import { getCategories } from '@/lib/sanity/queries'
 import CategoryCard from '@/components/ui/CategoryCard'
 import AnimalWarning from '@/components/ui/AnimalWarning'
+import { getPageUrl, SITE_CONFIG } from '@/lib/config/site'
 
 export const metadata: Metadata = {
   title: 'Adoptions',
@@ -11,8 +12,8 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Adoptions - Les Grignotons',
     description: 'Découvrez toutes nos races de lapins et cobayes disponibles à l\'adoption. Élevage familial responsable.',
-    url: 'https://les-grignotons.be/adoption',
-    images: ['/images/hero-center.jpg'],
+    url: getPageUrl('adoption'),
+    images: [SITE_CONFIG.defaultImages.og],
   },
   twitter: {
     card: 'summary_large_image',
@@ -20,11 +21,10 @@ export const metadata: Metadata = {
     description: 'Découvrez toutes nos races de lapins et cobayes disponibles à l\'adoption.',
   },
   alternates: {
-    canonical: 'https://les-grignotons.be/adoption',
+    canonical: getPageUrl('adoption'),
   },
 }
 
-export const revalidate = 30
 
 export default async function AdoptionPage() {
   const categories = await getCategories()

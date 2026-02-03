@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import { Category } from '@/types/sanity'
+import FavoritesBadge from './FavoritesBadge'
 
 interface HeaderClientProps {
   categories: Category[]
@@ -59,7 +60,7 @@ export default function HeaderClient({ categories }: HeaderClientProps) {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex space-x-8">
+          <div className="hidden md:flex items-center space-x-8">
             <Link 
               href="/" 
               style={linkStyle}
@@ -126,7 +127,7 @@ export default function HeaderClient({ categories }: HeaderClientProps) {
               onMouseLeave={handleMouseLeave}
               className="font-medium"
             >
-              Conseils
+              Conseils & Guides
             </Link>
             <Link 
               href="/temoignages" 
@@ -146,6 +147,9 @@ export default function HeaderClient({ categories }: HeaderClientProps) {
             >
               Contact
             </Link>
+
+            {/* Badge favoris */}
+            <FavoritesBadge />
           </div>
 
           {/* Mobile menu button */}
@@ -203,7 +207,7 @@ export default function HeaderClient({ categories }: HeaderClientProps) {
               className="block px-3 py-2 text-gray-700 hover:bg-primary/10 hover:text-primary rounded-md transition-all duration-200 font-medium"
               onClick={() => setIsMenuOpen(false)}
             >
-              Conseils
+              Conseils & Guides
             </Link>
             <Link 
               href="/temoignages" 
@@ -218,6 +222,17 @@ export default function HeaderClient({ categories }: HeaderClientProps) {
               onClick={() => setIsMenuOpen(false)}
             >
               Contact
+            </Link>
+            
+            <Link 
+              href="/favoris" 
+              className="block px-3 py-2 text-gray-700 hover:bg-primary/10 hover:text-primary rounded-md transition-all duration-200 font-medium flex items-center gap-2"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+              </svg>
+              Mes Favoris
             </Link>
           </div>
         )}

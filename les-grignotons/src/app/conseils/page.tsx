@@ -3,27 +3,28 @@ import Section from '@/components/ui/Section'
 import { getArticles } from '@/lib/sanity/queries'
 import Link from 'next/link'
 import { urlFor } from '@/lib/sanity/client'
+import { getPageUrl, getPageTitle, SITE_CONFIG } from '@/lib/config/site'
+import ConseilsAlert from './ConseilsAlert'
 
 export const metadata: Metadata = {
-  title: 'Conseils',
+  title: 'Conseils & Guides',
   description: 'Tous nos conseils pour bien accueillir et prendre soin de votre lapin ou cobaye.',
   openGraph: {
-    title: 'Conseils - Les Grignotons',
+    title: 'Conseils & Guides - Les Grignotons',
     description: 'Tous nos conseils pour bien accueillir et prendre soin de votre lapin ou cobaye.',
-    url: 'https://les-grignotons.be/conseils',
-    images: ['/images/hero-center.jpg'],
+    url: getPageUrl('conseils'),
+    images: [SITE_CONFIG.defaultImages.og],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Conseils - Les Grignotons',
+    title: 'Conseils & Guides - Les Grignotons',
     description: 'Tous nos conseils pour bien accueillir et prendre soin de votre lapin ou cobaye.',
   },
   alternates: {
-    canonical: 'https://les-grignotons.be/conseils',
+    canonical: getPageUrl('conseils'),
   },
 }
 
-export const revalidate = 300 // 5 minutes
 
 export default async function AdvicesPage() {
   const articles = await getArticles()
@@ -60,6 +61,11 @@ export default async function AdvicesPage() {
         </div>
       </Section>
 
+      {/* Message d'alerte si article non visible */}
+      <Section className="bg-white pt-8 pb-0">
+        <ConseilsAlert />
+      </Section>
+
       {/* Articles par catégorie */}
       {Object.entries(articlesByCategory).map(([category, categoryArticles]) => (
         <Section key={category} className={category === 'race' ? 'bg-beige' : 'bg-white'}>
@@ -87,7 +93,19 @@ export default async function AdvicesPage() {
                     {article.title}
                   </h3>
                   {article.excerpt && (
-                    <p className="text-gray-600 line-clamp-3">{article.excerpt}</p>
+                    <p className="text-gray-600 line-clamp-3 mb-3">{article.excerpt}</p>
+                  )}
+                  {article.publishedAt && (
+                    <p className="text-sm text-gray-500 flex items-center gap-1">
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      </svg>
+                      {new Date(article.publishedAt).toLocaleDateString('fr-FR', {
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric'
+                      })}
+                    </p>
                   )}
                 </div>
               </Link>

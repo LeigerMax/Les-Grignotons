@@ -11,7 +11,7 @@ import { OrganizationSchema } from '@/components/seo/JsonLd'
 import AnimalWarning from '@/components/ui/AnimalWarning'
 
 
-export const revalidate = 60 // Revalider toutes les 60 secondes
+
 
 export default async function HomePage() {
   // Récupération des données

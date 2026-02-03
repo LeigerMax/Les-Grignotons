@@ -3,6 +3,7 @@ import Section from '@/components/ui/Section'
 import TestimonialCard from '@/components/ui/TestimonialCard'
 import Button from '@/components/ui/Button'
 import { getTestimonials } from '@/lib/sanity/queries'
+import { getPageUrl, SITE_CONFIG } from '@/lib/config/site'
 
 export const metadata: Metadata = {
   title: 'Témoignages',
@@ -10,8 +11,8 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Témoignages - Les Grignotons',
     description: 'Découvrez les avis de nos adoptants heureux. Des familles et des animaux épanouis.',
-    url: 'https://les-grignotons.be/temoignages',
-    images: ['/images/hero-center.jpg'],
+    url: getPageUrl('temoignages'),
+    images: [SITE_CONFIG.defaultImages.og],
   },
   twitter: {
     card: 'summary_large_image',
@@ -19,11 +20,11 @@ export const metadata: Metadata = {
     description: 'Découvrez les avis de nos adoptants heureux.',
   },
   alternates: {
-    canonical: 'https://les-grignotons.be/temoignages',
+    canonical: getPageUrl('temoignages'),
   },
 }
 
-export const revalidate = 60
+
 
 export default async function TestimonialsPage() {
   const testimonials = await getTestimonials(20)

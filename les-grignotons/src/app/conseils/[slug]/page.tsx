@@ -1,5 +1,5 @@
 import { Metadata } from 'next'
-import { notFound } from 'next/navigation'
+import { notFound, redirect } from 'next/navigation'
 import Section from '@/components/ui/Section'
 import Button from '@/components/ui/Button'
 import { getArticleBySlug, getArticles } from '@/lib/sanity/queries'
@@ -7,6 +7,7 @@ import { urlFor } from '@/lib/sanity/client'
 import { PortableText } from 'next-sanity'
 import Link from 'next/link'
 import { ArticleSchema, BreadcrumbSchema } from '@/components/seo/JsonLd'
+import { getPageUrl, getPageTitle, SITE_CONFIG } from '@/lib/config/site'
 
 type Props = {
   params: Promise<{ slug: string }>
@@ -31,7 +32,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const imageUrl = article.mainImage?.asset?.url 
     ? urlFor(article.mainImage).width(1200).height(630).url()
-    : '/images/hero-center.jpg'
+    : SITE_CONFIG.defaultImages.og
 
   return {
     title: article.title,
@@ -39,9 +40,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: `${article.title} - Les Grignotons`,
       description: article.excerpt || article.title,
-      url: `https://les-grignotons.be/conseils/${slug}`,
+      url: getPageUrl(`conseils/${slug}`),
       type: 'article',
-      publishedTime: article._createdAt,
+      publishedTime: article.publishedAt || article._createdAt,
       modifiedTime: article._updatedAt,
       images: [imageUrl],
     },
@@ -52,7 +53,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       images: [imageUrl],
     },
     alternates: {
-      canonical: `https://les-grignotons.be/conseils/${slug}`,
+      canonical: getPageUrl(`conseils/${slug}`),
     },
   }
 }
@@ -66,6 +67,11 @@ export default async function ArticlePage({ params }: Props) {
 
   if (!article) {
     notFound()
+  }
+
+  // Vérifier si l'article est visible
+  if (!article.isVisible) {
+    redirect('/conseils?error=article-non-visible')
   }
 
   // Récupérer 3 autres articles (exclure l'article actuel)
@@ -84,7 +90,7 @@ export default async function ArticlePage({ params }: Props) {
 
   const imageUrl = article.mainImage 
     ? urlFor(article.mainImage).width(1200).height(675).url()
-    : '/images/hero-center.jpg'
+    : SITE_CONFIG.defaultImages.og
 
   return (
     <main>
@@ -93,18 +99,18 @@ export default async function ArticlePage({ params }: Props) {
         headline={article.title}
         description={article.excerpt || article.title}
         image={imageUrl}
-        datePublished={article._createdAt}
+        datePublished={article.publishedAt || article._createdAt}
         dateModified={article._updatedAt}
         author="Les Grignotons"
-        url={`https://les-grignotons.be/conseils/${slug}`}
+        url={getPageUrl(`conseils/${slug}`)}
       />
 
       {/* Breadcrumb Schema.org */}
       <BreadcrumbSchema
         items={[
-          { name: 'Accueil', url: 'https://les-grignotons.be' },
-          { name: 'Conseils', url: 'https://les-grignotons.be/conseils' },
-          { name: article.title, url: `https://les-grignotons.be/conseils/${slug}` },
+          { name: 'Accueil', url: SITE_CONFIG.url },
+          { name: 'Conseils & Guides', url: getPageUrl('conseils') },
+          { name: article.title, url: getPageUrl(`conseils/${slug}`) },
         ]}
       />
 
@@ -123,7 +129,7 @@ export default async function ArticlePage({ params }: Props) {
             >
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
-            Retour aux conseils
+            Retour aux conseils & guides
           </Link>
           <div className="mb-4">
             <span className="inline-block px-4 py-2 bg-primary text-white rounded-full text-sm font-semibold">
@@ -134,8 +140,20 @@ export default async function ArticlePage({ params }: Props) {
             {article.title}
           </h1>
           {article.excerpt && (
-            <p className="text-xl text-gray-700">
+            <p className="text-xl text-gray-700 mb-4">
               {article.excerpt}
+            </p>
+          )}
+          {article.publishedAt && (
+            <p className="text-sm text-gray-600 flex items-center gap-2">
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+              Publié le {new Date(article.publishedAt).toLocaleDateString('fr-FR', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+              })}
             </p>
           )}
         </div>
@@ -288,7 +306,7 @@ export default async function ArticlePage({ params }: Props) {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button href="/conseils" variant="outline">
-              ← Tous les conseils
+              ← Tous les conseils & guides
             </Button>
             <Button href="/contact" variant="primary">
               Nous contacter

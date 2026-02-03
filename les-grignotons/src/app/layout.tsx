@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import { SITE_CONFIG } from '@/lib/config/site';
 
 const inter = Inter({
   subsets: ["latin"],
@@ -10,7 +11,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://les-grignotons.be'),
+  metadataBase: new URL(SITE_CONFIG.url),
   title: {
     default: "Les Grignotons - Élevage familial de lapins et cobayes",
     template: "%s | Les Grignotons"
@@ -27,7 +28,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'fr_BE',
-    url: 'https://les-grignotons.be',
+    url: SITE_CONFIG.url,
     siteName: 'Les Grignotons',
     title: 'Les Grignotons - Élevage familial de lapins et cobayes',
     description: 'Élevage familial responsable de lapins et cobayes. Adoptions avec accompagnement et suivi. Passion, bien-être animal et transparence.',

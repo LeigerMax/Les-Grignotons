@@ -1,8 +1,9 @@
 import { MetadataRoute } from 'next'
 import { getAnimals, getArticles, getCategories } from '@/lib/sanity/queries'
+import { SITE_CONFIG } from '@/lib/config/site'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://les-grignotons.be'
+  const baseUrl = SITE_CONFIG.url
 
   // Récupérer toutes les données dynamiques
   const [animals, articles, categories] = await Promise.all([

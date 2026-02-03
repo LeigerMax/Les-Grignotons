@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { Animal } from '@/types/sanity'
 import { getOptimizedImageUrl } from '@/lib/sanity/client'
 import { calculateAge, getSexEmoji } from '@/lib/utils/age'
+import FavoriteButton from '@/components/ui/FavoriteButton'
 
 interface AnimalCardProps {
   animal: Animal
@@ -40,6 +41,11 @@ export default function AnimalCard({ animal }: AnimalCardProps) {
           <span className={`px-3 py-1 rounded-full text-xs font-semibold ${statusStyles[animal.status]}`}>
             {animal.status}
           </span>
+        </div>
+
+        {/* Bouton favori */}
+        <div className="absolute top-3 left-3">
+          <FavoriteButton animalId={animal._id} size="md" />
         </div>
       </div>
 

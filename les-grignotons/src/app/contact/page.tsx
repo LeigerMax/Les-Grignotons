@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import Section from '@/components/ui/Section'
 import Button from '@/components/ui/Button'
+import { getPageUrl, SITE_CONFIG } from '@/lib/config/site'
 
 export const metadata: Metadata = {
   title: 'Contact',
@@ -8,8 +9,8 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Contact - Les Grignotons',
     description: 'Contactez-nous pour adopter un de nos lapins ou cobayes, ou pour toute question.',
-    url: 'https://les-grignotons.be/contact',
-    images: ['/images/hero-center.jpg'],
+    url: getPageUrl('contact'),
+    images: [SITE_CONFIG.defaultImages.og],
   },
   twitter: {
     card: 'summary_large_image',
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
     description: 'Contactez-nous pour adopter un de nos lapins ou cobayes.',
   },
   alternates: {
-    canonical: 'https://les-grignotons.be/contact',
+    canonical: getPageUrl('contact'),
   },
 }
 

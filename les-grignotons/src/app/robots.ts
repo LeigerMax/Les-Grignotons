@@ -1,4 +1,5 @@
 import { MetadataRoute } from 'next'
+import { SITE_CONFIG } from '@/lib/config/site'
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -6,9 +7,9 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/api/', '/admin/'],
+        disallow: ['/api/', '/_next/', '/admin/'],
       },
     ],
-    sitemap: 'https://les-grignotons.be/sitemap.xml',
+    sitemap: `${SITE_CONFIG.url}/sitemap.xml`,
   }
 }

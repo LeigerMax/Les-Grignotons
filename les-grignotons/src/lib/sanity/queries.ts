@@ -40,7 +40,9 @@ export async function getAnimals(status?: Animal['status']): Promise<Animal[]> {
     status
   }`
   
-  return sanityClient.fetch<Animal[]>(query)
+  return sanityClient.fetch<Animal[]>(query, {}, {
+    next: { tags: ['animals'] }
+  })
 }
 
 /**
@@ -72,7 +74,9 @@ export async function getAnimalById(id: string): Promise<Animal | null> {
     status
   }`
   
-  return sanityClient.fetch<Animal>(query, { id })
+  return sanityClient.fetch<Animal>(query, { id }, {
+    next: { tags: ['animals', `animal-${id}`] }
+  })
 }
 
 /**
@@ -105,7 +109,9 @@ export async function getCategories(): Promise<Category[]> {
     "animalCount": count(*[_type == "animal" && references(^._id)])
   }`
   
-  return sanityClient.fetch<Category[]>(query)
+  return sanityClient.fetch<Category[]>(query, {}, {
+    next: { revalidate: 3600, tags: ['categories'] }
+  })
 }
 
 /**
@@ -127,7 +133,9 @@ export async function getCategoryBySlug(slug: string): Promise<Category | null> 
     order
   }`
   
-  return sanityClient.fetch<Category>(query, { slug })
+  return sanityClient.fetch<Category>(query, { slug }, {
+    next: { revalidate: 3600, tags: ['categories', `category-${slug}`] }
+  })
 }
 
 /**
@@ -175,7 +183,9 @@ export async function getAnimalsByCategory(
     status
   }`
   
-  return sanityClient.fetch<Animal[]>(query, { categorySlug })
+  return sanityClient.fetch<Animal[]>(query, { categorySlug }, {
+    next: { tags: ['animals', `category-${categorySlug}`] }
+  })
 }
 
 // ===== TÉMOIGNAGES =====
@@ -212,6 +222,7 @@ export async function getArticles(category?: Article['category']): Promise<Artic
   const query = `${filter} | order(publishedAt desc) {
     _id,
     _type,
+    _createdAt,
     _updatedAt,
     title,
     slug,
@@ -232,11 +243,14 @@ export async function getArticles(category?: Article['category']): Promise<Artic
 
 /**
  * Récupère un article par son slug
+ * Note: Ne filtre pas par isVisible pour permettre la gestion côté client
  */
 export async function getArticleBySlug(slug: string): Promise<Article | null> {
-  const query = `*[_type == "article" && slug.current == $slug && isVisible == true][0] {
+  const query = `*[_type == "article" && slug.current == $slug][0] {
     _id,
     _type,
+    _createdAt,
+    _updatedAt,
     title,
     slug,
     mainImage {
@@ -249,7 +263,8 @@ export async function getArticleBySlug(slug: string): Promise<Article | null> {
     excerpt,
     content,
     category,
-    publishedAt
+    publishedAt,
+    isVisible
   }`
   
   return sanityClient.fetch<Article>(query, { slug })

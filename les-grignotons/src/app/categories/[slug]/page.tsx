@@ -8,8 +8,8 @@ import Section from '@/components/ui/Section'
 import CategoryAnimalsClient from '@/components/categories/CategoryAnimalsClient'
 import { BreadcrumbSchema } from '@/components/seo/JsonLd'
 import AnimalWarning from '@/components/ui/AnimalWarning'
+import { getPageUrl, SITE_CONFIG } from '@/lib/config/site'
 
-export const revalidate = 60
 
 interface CategoryPageProps {
   params: Promise<{
@@ -36,7 +36,7 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
 
   const imageUrl = category.image?.asset?.url 
     ? getOptimizedImageUrl(category.image.asset.url, 1200, 630)
-    : '/images/hero-center.jpg'
+    : SITE_CONFIG.defaultImages.og
 
   return {
     title: category.name,
@@ -44,7 +44,7 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
     openGraph: {
       title: `${category.name} - Les Grignotons`,
       description: category.description,
-      url: `https://les-grignotons.be/categories/${slug}`,
+      url: getPageUrl(`categories/${slug}`),
       images: [imageUrl],
     },
     twitter: {
@@ -54,7 +54,7 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
       images: [imageUrl],
     },
     alternates: {
-      canonical: `https://les-grignotons.be/categories/${slug}`,
+      canonical: getPageUrl(`categories/${slug}`),
     },
   }
 }
@@ -78,9 +78,9 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
       {/* Breadcrumb Schema.org */}
       <BreadcrumbSchema
         items={[
-          { name: 'Accueil', url: 'https://les-grignotons.be' },
-          { name: 'Adoptions', url: 'https://les-grignotons.be/adoption' },
-          { name: category.name, url: `https://les-grignotons.be/categories/${slug}` },
+          { name: 'Accueil', url: SITE_CONFIG.url },
+          { name: 'Adoptions', url: getPageUrl('adoption') },
+          { name: category.name, url: getPageUrl(`categories/${slug}`) },
         ]}
       />
 

@@ -23,8 +23,13 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/favoris" className="text-gray-300 hover:text-primary transition">
+                  Mes Favoris
+                </Link>
+              </li>
+              <li>
                 <Link href="/conseils" className="text-gray-300 hover:text-primary transition">
-                  Conseils
+                  Conseils & Guides
                 </Link>
               </li>
               <li>
