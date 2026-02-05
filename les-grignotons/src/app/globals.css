@@ -2,19 +2,19 @@
 
 /* Variables de couleurs personnalisées pour Tailwind v4 */
 @theme {
-  --color-primary: #6b9f6e;
-  --color-primary-dark: #4a7c4d;
-  --color-primary-light: #a8d5ab;
-  --color-secondary: #fff9f0;
-  --color-accent: #f4b393;
-  --color-accent-light: #ffddc7;
-  --color-earth: #d4a574;
-  --color-beige: #faf3e9;
+  --color-primary: #738e3f;
+  --color-primary-dark: #2c4211;
+  --color-primary-light: #b0b83e;
+  --color-secondary: #c6b398;
+  --color-accent: #9d7a50;
+  --color-accent-light: #b0b83e;
+  --color-earth: #9d7a50;
+  --color-beige: #c6b398;
 }
 
 /* Style global du body */
 body {
-  background-color: #FFF9F0;
+  background-color: #c6b398;
   color: #2d3748;
   scroll-behavior: smooth;
 }

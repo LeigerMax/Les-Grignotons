@@ -6,17 +6,17 @@ const config: Config = {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#6B9F6E',
-          dark: '#4A7C4D',
-          light: '#A8D5AB',
+          DEFAULT: '#738e3f',
+          dark: '#2c4211',
+          light: '#b0b83e',
         },
-        secondary: '#FFF9F0',
+        secondary: '#c6b398',
         accent: {
-          DEFAULT: '#F4B393',
-          light: '#FFDDC7',
+          DEFAULT: '#9d7a50',
+          light: '#b0b83e',
         },
-        earth: '#D4A574',
-        beige: '#FAF3E9',
+        earth: '#9d7a50',
+        beige: '#c6b398',
       },
       fontFamily: {
         sans: ['var(--font-inter)', 'system-ui', 'sans-serif']

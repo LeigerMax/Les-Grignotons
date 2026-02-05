@@ -69,7 +69,10 @@ export default function RootLayout({
     <html lang="fr">
       <body className={`${inter.variable} font-sans antialiased flex flex-col min-h-screen bg-secondary`}>
         <Header />
-        {children}
+        {/* Contenu principal avec marge à gauche pour le menu latéral sur desktop */}
+        <div className="md:ml-64">
+          {children}
+        </div>
         <Footer />
       </body>
     </html>

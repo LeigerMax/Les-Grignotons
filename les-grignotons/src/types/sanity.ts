@@ -35,6 +35,8 @@ export interface Category extends SanityDocument {
   slug: {
     current: string
   }
+  type: 'lapin' | 'cobaye' | 'autre'
+  hidden: boolean
   description: string
   image?: SanityImage
   order?: number

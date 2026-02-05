@@ -13,7 +13,8 @@ import { Animal, Testimonial, Category, Article } from '@/types/sanity'
  * Inclut maintenant la catégorie, le sexe et la date de naissance
  */
 export async function getAnimals(status?: Animal['status']): Promise<Animal[]> {
-  const filter = status ? `*[_type == "animal" && status == "${status}"]` : `*[_type == "animal"]`
+  const baseFilter = `_type == "animal" && (!defined(category) || category->hidden != true)`
+  const filter = status ? `*[${baseFilter} && status == "${status}"]` : `*[${baseFilter}]`
   
   const query = `${filter} | order(_createdAt desc) {
     _id,
@@ -89,14 +90,16 @@ export async function getAvailableAnimals(): Promise<Animal[]> {
 // ===== CATÉGORIES =====
 
 /**
- * Récupère toutes les catégories, triées par ordre d'affichage
+ * Récupère toutes les catégories visibles, triées par ordre d'affichage
  */
 export async function getCategories(): Promise<Category[]> {
-  const query = `*[_type == "category"] | order(order asc, name asc) {
+  const query = `*[_type == "category" && hidden != true] | order(order asc, name asc) {
     _id,
     _updatedAt,
     name,
     slug,
+    type,
+    hidden,
     description,
     image {
       asset->{
@@ -115,13 +118,15 @@ export async function getCategories(): Promise<Category[]> {
 }
 
 /**
- * Récupère une catégorie par son slug
+ * Récupère une catégorie par son slug (seulement si visible)
  */
 export async function getCategoryBySlug(slug: string): Promise<Category | null> {
-  const query = `*[_type == "category" && slug.current == $slug][0] {
+  const query = `*[_type == "category" && slug.current == $slug && hidden != true][0] {
     _id,
     name,
     slug,
+    type,
+    hidden,
     description,
     image {
       asset->{
@@ -149,7 +154,7 @@ export async function getAnimalsByCategory(
     sex?: Animal['sex']
   }
 ): Promise<Animal[]> {
-  let filterStr = `_type == "animal" && category->slug.current == $categorySlug`
+  let filterStr = `_type == "animal" && category->slug.current == $categorySlug && category->hidden != true`
   
   if (filters?.status) {
     filterStr += ` && status == "${filters.status}"`
