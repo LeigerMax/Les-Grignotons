@@ -16,7 +16,6 @@ export default function HeaderClient({ categories }: HeaderClientProps) {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Déclenchement plus progressif avec seuil à 50px
       setIsScrolled(window.scrollY > 50)
     }
 
@@ -24,22 +23,13 @@ export default function HeaderClient({ categories }: HeaderClientProps) {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Séparer les catégories par type
-  const lapinCategories = categories.filter(cat => cat.type === 'lapin')
-  const cobayeCategories = categories.filter(cat => cat.type === 'cobaye')
-  const autreCategories = categories.filter(cat => cat.type === 'autre')
-
   return (
     <>
       {/* Header avec logo centré et image animée */}
-      <header className="bg-white shadow-sm sticky top-0 z-50">
+      <header className="bg-white shadow-md sticky top-0 z-50">
         <div className="flex items-center justify-center h-20 px-4 relative">
-          {/* Image des animaux qui apparaît au scroll - À GAUCHE du logo */}
-          <div 
-            className={`hidden md:block absolute left-1/2 -translate-x-[300px] transition-all duration-1000 ease-in-out ${
-              isScrolled ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-90 -translate-y-2'
-            }`}
-          >
+          {/* Image des animaux - À GAUCHE du logo  */}
+          <div className="hidden md:block absolute left-1/2 -translate-x-[300px]">
             <div className="relative w-30 h-16">
               <Image
                 src="/images/animaux-hero.png"
@@ -81,7 +71,7 @@ export default function HeaderClient({ categories }: HeaderClientProps) {
       </header>
 
       {/* Menu latéral gauche - Desktop uniquement */}
-      <aside className="hidden md:block fixed left-0 top-20 h-[calc(100vh-5rem)] w-64 bg-secondary border-r border-gray-200 overflow-y-auto z-40">
+      <aside className="hidden md:block fixed left-0 top-20 h-[calc(100vh-5rem)] w-64 bg-white shadow-lg border-r border-gray-200 overflow-y-auto z-40">
         <nav className="py-6 px-4 space-y-1">
           <Link 
             href="/" 
@@ -91,7 +81,7 @@ export default function HeaderClient({ categories }: HeaderClientProps) {
           </Link>
           
           <Link 
-            href="/adoption" 
+            href="/adoptants" 
             className="block px-3 py-2 text-primary font-bold hover:bg-primary/10 rounded-md transition-all"
           >
             Conseils aux adoptants
@@ -102,37 +92,58 @@ export default function HeaderClient({ categories }: HeaderClientProps) {
           {/* Section Lapins */}
           <div className="py-2">
             <div className="px-3 mb-2">
-              <h3 className="text-lg font-bold text-gray-900">Lapins</h3>
+              <h3 className="text-lg font-bold text-gray-900">LAPINS</h3>
             </div>
             <div className="space-y-1">
-              {lapinCategories.map((category) => (
-                <Link
-                  key={category._id}
-                  href={`/categories/${category.slug.current}`}
-                  className="block px-3 py-1.5 text-sm text-gray-700 hover:bg-primary/10 hover:text-primary rounded-md transition-all"
-                >
-                  {category.name}
-                </Link>
-              ))}
-              <Link
-                href="/categories?type=lapin"
-                className="block px-3 py-2 text-sm text-gray-900 font-semibold hover:bg-primary/10 hover:text-primary rounded-md transition-all uppercase"
-              >
+            <Link              
+              href="/race-et-couleurs-les-lapins"
+              className="block px-3 py-2 mt-2 text-sm font-semibold text-primary hover:bg-primary/10 rounded-md transition-all"
+            >
+             Race et couleurs
+            </Link>
+              {/* LAPINS BÉLIERS */}
+              <div className="px-3 py-1 text-sm font-semibold text-gray-800 uppercase">
                 Lapins béliers
+              </div>
+              <Link
+                href="/categories/beliers-nains-neerlandais"
+                className="block px-3 py-1.5 text-sm text-gray-700 hover:bg-primary/10 hover:text-primary rounded-md transition-all pl-6"
+              >
+                Mes béliers nains néerlandais
               </Link>
               <Link
-                href="/categories?type=lapin-nain"
-                className="block px-3 py-2 text-sm text-gray-900 font-semibold hover:bg-primary/10 hover:text-primary rounded-md transition-all uppercase"
+                href="/categories/beliers-nains-rex"
+                className="block px-3 py-1.5 text-sm text-gray-700 hover:bg-primary/10 hover:text-primary rounded-md transition-all pl-6"
               >
-                Lapins nains de couleurs
+                Mes béliers nains rex
               </Link>
               <Link
-                href="/adoption"
-                className="block px-3 py-2 text-sm text-gray-900 font-semibold hover:bg-primary/10 hover:text-primary rounded-md transition-all uppercase"
+                href="/categories/beliers-nains-angoras"
+                className="block px-3 py-1.5 text-sm text-gray-700 hover:bg-primary/10 hover:text-primary rounded-md transition-all pl-6"
               >
-                L'apereaux a l'adoption
+                Mes béliers nains angoras
+              </Link>
+              <Link
+                href="/categories/beliers-geants-francais"
+                className="block px-3 py-1.5 text-sm text-gray-700 hover:bg-primary/10 hover:text-primary rounded-md transition-all pl-6"
+              >
+                Mes béliers Géants Français
+              </Link>
+              
+              <Link
+                href="/categories/extra-nains-de-couleurs"
+                className="block px-3 py-1.5 text-sm text-gray-700 hover:bg-primary/10 hover:text-primary rounded-md transition-all pl-6"
+              >
+                Mes extra nains de couleurs
               </Link>
             </div>
+
+            <Link
+              href="/adoption/lapins"
+              className="block px-3 py-2 mt-2 text-sm text-gray-700 hover:bg-primary/10 hover:text-primary rounded-md transition-all"
+            >
+              Lapereaux à l'adoption
+            </Link>
           </div>
           
           <div className="border-t border-gray-300 my-3"></div>
@@ -140,67 +151,51 @@ export default function HeaderClient({ categories }: HeaderClientProps) {
           {/* Section Cobayes */}
           <div className="py-2">
             <div className="px-3 mb-2">
-              <h3 className="text-lg font-bold text-gray-900">Cobayes</h3>
+              <h3 className="text-lg font-bold text-gray-900">COBAYES</h3>
             </div>
             <div className="space-y-1">
-              {cobayeCategories.map((category) => (
-                <Link
-                  key={category._id}
-                  href={`/categories/${category.slug.current}`}
-                  className="block px-3 py-1.5 text-sm text-gray-700 hover:bg-primary/10 hover:text-primary rounded-md transition-all"
-                >
-                  {category.name}
-                </Link>
-              ))}
+              <Link              href="/race-et-couleurs-les-cobayes"
+              className="block px-3 py-2 mt-2 text-sm font-semibold text-primary hover:bg-primary/10 rounded-md transition-all"
+            >
+              Race et couleurs
+            </Link>
               <Link
-                href="/adoption?type=cobaye"
-                className="block px-3 py-2 text-sm text-gray-900 font-semibold hover:bg-primary/10 hover:text-primary rounded-md transition-all uppercase"
+                href="/categories/peruviens"
+                className="block px-3 py-1.5 text-sm text-gray-700 hover:bg-primary/10 hover:text-primary rounded-md transition-all"
               >
-                Bebes cobayes a l'adoption
+                Péruviens
+              </Link>
+              <Link
+                href="/categories/teddys-suisses"
+                className="block px-3 py-1.5 text-sm text-gray-700 hover:bg-primary/10 hover:text-primary rounded-md transition-all"
+              >
+                Teddys suisses
+              </Link>
+              <Link
+                href="/categories/poils-courts"
+                className="block px-3 py-1.5 text-sm text-gray-700 hover:bg-primary/10 hover:text-primary rounded-md transition-all"
+              >
+                Poils courts
+              </Link>
+              <Link
+                href="/categories/alpaga"
+                className="block px-3 py-1.5 text-sm text-gray-700 hover:bg-primary/10 hover:text-primary rounded-md transition-all"
+              >
+                Alpaga
               </Link>
             </div>
+
+            <Link
+              href="/adoption/cobayes"
+              className="block px-3 py-2 mt-2 text-sm text-gray-700 hover:bg-primary/10 hover:text-primary rounded-md transition-all"
+            >
+              Bébés cobayes à l'adoption
+            </Link>
           </div>
           
+
           <div className="border-t border-gray-300 my-3"></div>
           
-          {/* Section Autres animaux - seulement si des catégories existent */}
-          {autreCategories.length > 0 && (
-            <>
-              <div className="py-2">
-                <div className="px-3 mb-2">
-                  <h3 className="text-lg font-bold text-gray-900">Autres animaux</h3>
-                </div>
-                <div className="space-y-1">
-                  {autreCategories.map((category) => (
-                    <Link
-                      key={category._id}
-                      href={`/categories/${category.slug.current}`}
-                      className="block px-3 py-1.5 text-sm text-gray-700 hover:bg-primary/10 hover:text-primary rounded-md transition-all"
-                    >
-                      {category.name}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-              <div className="border-t border-gray-300 my-3"></div>
-            </>
-          )}
-          
-          <Link 
-            href="/categories" 
-            className="block px-3 py-2 text-sm text-gray-700 hover:bg-primary/10 hover:text-primary rounded-md transition-all"
-          >
-            Toutes les catégories
-          </Link>
-        
-          <div className="border-t border-gray-300 my-3"></div>
-          
-          <Link 
-            href="/conseils" 
-            className="block px-3 py-2 text-gray-700 hover:bg-primary/10 hover:text-primary rounded-md transition-all font-medium"
-          >
-            Conseils & Guides
-          </Link>
           
           <Link 
             href="/temoignages" 
@@ -231,7 +226,7 @@ export default function HeaderClient({ categories }: HeaderClientProps) {
             </Link>
             
             <Link 
-              href="/adoption" 
+              href="/adoptants" 
               className="block px-3 py-2 text-primary font-bold hover:bg-primary/10 rounded-md"
               onClick={() => setIsMobileMenuOpen(false)}
             >
@@ -243,27 +238,57 @@ export default function HeaderClient({ categories }: HeaderClientProps) {
             {/* Section Lapins mobile */}
             <div className="py-2">
               <div className="px-3 mb-2">
-                <h3 className="text-lg font-bold text-gray-900">Lapins</h3>
+                <h3 className="text-lg font-bold text-gray-900">LAPINS</h3>
               </div>
               <div className="space-y-1 pl-3">
-                {lapinCategories.map((category) => (
-                  <Link
-                    key={category._id}
-                    href={`/categories/${category.slug.current}`}
-                    className="block px-3 py-1.5 text-sm text-gray-700 hover:bg-primary/10 hover:text-primary rounded-md"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    {category.name}
-                  </Link>
-                ))}
+                {/* LAPINS BÉLIERS */}
+                <div className="px-3 py-1 text-sm font-semibold text-gray-800 uppercase">
+                  Lapins béliers
+                </div>
                 <Link
-                  href="/adoption"
-                  className="block px-3 py-2 text-sm text-gray-900 font-semibold hover:bg-primary/10 hover:text-primary rounded-md uppercase"
+                  href="/categories/beliers-nains-neerlandais"
+                  className="block px-3 py-1.5 text-sm text-gray-700 hover:bg-primary/10 hover:text-primary rounded-md pl-6"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  L'apereaux a l'adoption
+                  Mes béliers nains néerlandais
+                </Link>
+                <Link
+                  href="/categories/beliers-nains-rex"
+                  className="block px-3 py-1.5 text-sm text-gray-700 hover:bg-primary/10 hover:text-primary rounded-md pl-6"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Mes béliers nains rex
+                </Link>
+                <Link
+                  href="/categories/beliers-nains-angoras"
+                  className="block px-3 py-1.5 text-sm text-gray-700 hover:bg-primary/10 hover:text-primary rounded-md pl-6"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Mes béliers nains angoras
+                </Link>
+                <Link
+                  href="/categories/beliers-geants-francais"
+                  className="block px-3 py-1.5 text-sm text-gray-700 hover:bg-primary/10 hover:text-primary rounded-md pl-6"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Mes béliers Géants Français
+                </Link>
+                
+                <Link
+                  href="/categories/extra-nains-de-couleurs"
+                  className="block px-3 py-1.5 text-sm text-gray-700 hover:bg-primary/10 hover:text-primary rounded-md pl-6"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Mes extra nains de couleurs
                 </Link>
               </div>
+              <Link
+                href="/adoption?species=Lapin"
+                className="block px-3 py-2 mt-2 text-sm text-gray-700 hover:bg-primary/10 hover:text-primary rounded-md"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Lapereaux à l'adoption
+              </Link>
             </div>
             
             <div className="border-t border-gray-300 my-3"></div>
@@ -271,73 +296,50 @@ export default function HeaderClient({ categories }: HeaderClientProps) {
             {/* Section Cobayes mobile */}
             <div className="py-2">
               <div className="px-3 mb-2">
-                <h3 className="text-lg font-bold text-gray-900">Cobayes</h3>
+                <h3 className="text-lg font-bold text-gray-900">COBAYES</h3>
               </div>
               <div className="space-y-1 pl-3">
-                {cobayeCategories.map((category) => (
-                  <Link
-                    key={category._id}
-                    href={`/categories/${category.slug.current}`}
-                    className="block px-3 py-1.5 text-sm text-gray-700 hover:bg-primary/10 hover:text-primary rounded-md"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    {category.name}
-                  </Link>
-                ))}
                 <Link
-                  href="/adoption?type=cobaye"
-                  className="block px-3 py-2 text-sm text-gray-900 font-semibold hover:bg-primary/10 hover:text-primary rounded-md uppercase"
+                  href="/categories/peruviens"
+                  className="block px-3 py-1.5 text-sm text-gray-700 hover:bg-primary/10 hover:text-primary rounded-md"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  Bebes cobayes a l'adoption
+                  Péruviens
+                </Link>
+                <Link
+                  href="/categories/teddys-suisses"
+                  className="block px-3 py-1.5 text-sm text-gray-700 hover:bg-primary/10 hover:text-primary rounded-md"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Teddys suisses
+                </Link>
+                <Link
+                  href="/categories/poils-courts"
+                  className="block px-3 py-1.5 text-sm text-gray-700 hover:bg-primary/10 hover:text-primary rounded-md"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Poils courts
+                </Link>
+                <Link
+                  href="/categories/alpaga"
+                  className="block px-3 py-1.5 text-sm text-gray-700 hover:bg-primary/10 hover:text-primary rounded-md"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Alpaga
                 </Link>
               </div>
+              <Link
+                href="/adoption?species=Cobaye"
+                className="block px-3 py-2 mt-2 text-sm text-gray-700 hover:bg-primary/10 hover:text-primary rounded-md"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Bébés cobayes à l'adoption
+              </Link>
             </div>
             
-            <div className="border-t border-gray-300 my-3"></div>
-            
-            {/* Section Autres animaux mobile - seulement si des catégories existent */}
-            {autreCategories.length > 0 && (
-              <>
-                <div className="py-2">
-                  <div className="px-3 mb-2">
-                    <h3 className="text-lg font-bold text-gray-900">Autres animaux</h3>
-                  </div>
-                  <div className="space-y-1 pl-3">
-                    {autreCategories.map((category) => (
-                      <Link
-                        key={category._id}
-                        href={`/categories/${category.slug.current}`}
-                        className="block px-3 py-1.5 text-sm text-gray-700 hover:bg-primary/10 hover:text-primary rounded-md"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                      >
-                        {category.name}
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-                <div className="border-t border-gray-300 my-3"></div>
-              </>
-            )}
-            
-            <Link 
-              href="/categories" 
-              className="block px-3 py-2 text-sm text-gray-700 hover:bg-primary/10 hover:text-primary rounded-md"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Toutes les catégories
-            </Link>
-            
             
             <div className="border-t border-gray-300 my-3"></div>
             
-            <Link 
-              href="/conseils" 
-              className="block px-3 py-2 text-gray-700 hover:bg-primary/10 hover:text-primary rounded-md font-medium"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Conseils & Guides
-            </Link>
             
             <Link 
               href="/temoignages" 

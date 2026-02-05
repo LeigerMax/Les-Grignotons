@@ -5,7 +5,7 @@ import Button from '@/components/ui/Button'
 export default function NotFound() {
   return (
     <main>
-      <Section className="bg-gradient-to-br from-primary/10 to-accent/10 min-h-[70vh] flex items-center justify-center">
+      <Section className="bg-gradient-to-b from-primary/10 to-beige/10 min-h-[70vh] flex items-center justify-center">
         <div className="text-center max-w-2xl mx-auto px-4">
           {/* Illustration 404 */}
           <div className="mb-8">
@@ -28,9 +28,6 @@ export default function NotFound() {
             </Button>
             <Button href="/adoption" variant="outline">
               Voir les animaux
-            </Button>
-            <Button href="/conseils" variant="outline">
-              Lire nos conseils
             </Button>
           </div>
 

@@ -11,9 +11,10 @@ import { Animal, Testimonial, Category, Article } from '@/types/sanity'
 /**
  * Récupère tous les animaux avec un filtre optionnel sur le statut
  * Inclut maintenant la catégorie, le sexe et la date de naissance
+ * IMPORTANT: Filtre automatiquement les reproducteurs pour n'afficher que les animaux à adopter
  */
 export async function getAnimals(status?: Animal['status']): Promise<Animal[]> {
-  const baseFilter = `_type == "animal" && (!defined(category) || category->hidden != true)`
+  const baseFilter = `_type == "animal" && animalType == "adoption" && (!defined(category) || category->hidden != true)`
   const filter = status ? `*[${baseFilter} && status == "${status}"]` : `*[${baseFilter}]`
   
   const query = `${filter} | order(_createdAt desc) {
@@ -29,6 +30,7 @@ export async function getAnimals(status?: Animal['status']): Promise<Animal[]> {
       slug
     },
     sex,
+    animalType,
     birthDate,
     description,
     image {
@@ -38,7 +40,33 @@ export async function getAnimals(status?: Animal['status']): Promise<Animal[]> {
       },
       hotspot
     },
-    status
+    status,
+    father{
+      type,
+      reference->{
+        _id,
+        name,
+        species,
+        category->{
+          name,
+          slug
+        }
+      },
+      name
+    },
+    mother{
+      type,
+      reference->{
+        _id,
+        name,
+        species,
+        category->{
+          name,
+          slug
+        }
+      },
+      name
+    }
   }`
   
   return sanityClient.fetch<Animal[]>(query, {}, {
@@ -48,6 +76,7 @@ export async function getAnimals(status?: Animal['status']): Promise<Animal[]> {
 
 /**
  * Récupère un animal par son ID
+ * Inclut tous les détails y compris les parents
  */
 export async function getAnimalById(id: string): Promise<Animal | null> {
   const query = `*[_type == "animal" && _id == $id][0] {
@@ -63,6 +92,7 @@ export async function getAnimalById(id: string): Promise<Animal | null> {
       slug
     },
     sex,
+    animalType,
     birthDate,
     description,
     image {
@@ -72,7 +102,33 @@ export async function getAnimalById(id: string): Promise<Animal | null> {
       },
       hotspot
     },
-    status
+    status,
+    father{
+      type,
+      reference->{
+        _id,
+        name,
+        species,
+        category->{
+          name,
+          slug
+        }
+      },
+      name
+    },
+    mother{
+      type,
+      reference->{
+        _id,
+        name,
+        species,
+        category->{
+          name,
+          slug
+        }
+      },
+      name
+    }
   }`
   
   return sanityClient.fetch<Animal>(query, { id }, {
@@ -146,6 +202,7 @@ export async function getCategoryBySlug(slug: string): Promise<Category | null> 
 /**
  * Récupère les animaux d'une catégorie spécifique
  * Permet de filtrer par statut et sexe
+ * Affiche TOUS les animaux (reproducteurs et à adopter)
  */
 export async function getAnimalsByCategory(
   categorySlug: string, 
@@ -176,6 +233,7 @@ export async function getAnimalsByCategory(
       slug
     },
     sex,
+    animalType,
     birthDate,
     description,
     image {
@@ -185,7 +243,33 @@ export async function getAnimalsByCategory(
       },
       hotspot
     },
-    status
+    status,
+    father{
+      type,
+      reference->{
+        _id,
+        name,
+        species,
+        category->{
+          name,
+          slug
+        }
+      },
+      name
+    },
+    mother{
+      type,
+      reference->{
+        _id,
+        name,
+        species,
+        category->{
+          name,
+          slug
+        }
+      },
+      name
+    }
   }`
   
   return sanityClient.fetch<Animal[]>(query, { categorySlug }, {

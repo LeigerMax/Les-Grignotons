@@ -12,7 +12,7 @@ import AnimalWarning from '@/components/ui/AnimalWarning'
 
 
 const ContactSection = dynamic(() => import('@/components/home/ContactSection'), {
-  loading: () => <div className="py-20 bg-gradient-to-br from-primary/5 to-white"><div className="max-w-7xl mx-auto px-4 text-center"><p className="text-gray-500">Chargement des informations de contact...</p></div></div>
+  loading: () => <div className="py-20 bg-gradient-to-b from-primary/5 to-white"><div className="max-w-7xl mx-auto px-4 text-center"><p className="text-gray-500">Chargement des informations de contact...</p></div></div>
 })
 
 
@@ -110,24 +110,24 @@ export default async function HomePage() {
             <div className="text-6xl mb-4">❤️</div>
             <h3 className="text-xl font-bold text-gray-900 mb-3">Bien-être animal</h3>
             <p className="text-gray-700">
-              Nos animaux sont élevés avec amour dans un environnement sain et spacieux.
+              Mes animaux sont élevés avec amour dans un environnement sain et spacieux.
             </p>
           </div>
           <div className="text-center p-8 rounded-2xl bg-white shadow-lg hover:shadow-xl transition-shadow">
             <div className="text-6xl mb-4">🏥</div>
             <h3 className="text-xl font-bold text-gray-900 mb-3">Suivi vétérinaire</h3>
             <p className="text-gray-700">
-              Tous nos animaux sont suivis régulièrement par un vétérinaire NAC.
+              Tous mes animaux sont suivis régulièrement par un vétérinaire NAC.
             </p>
           </div>
           <div className="text-center p-8 rounded-2xl bg-white shadow-lg hover:shadow-xl transition-shadow">
             <div className="text-6xl mb-4">🌟</div>
             <h3 className="text-xl font-bold text-gray-900 mb-3">Accompagnement</h3>
             <p className="text-gray-700">
-              Nous vous conseillons avant et après l'adoption pour une intégration réussie.
+              Je vous accompagne avant et après l'adoption pour une intégration réussie.
             </p>
-                  <Button href="/conseils" variant="outline" className="inline-flex mx-2 px-4 py-1 text-sm">
-                   Conseils & Guides
+                  <Button href="/adoptants" variant="outline" className="inline-flex mx-2 px-4 py-1 text-sm">
+                   Conseils aux adoptants
                 </Button>
           </div>
         </div>
@@ -159,21 +159,21 @@ export default async function HomePage() {
       <ContactSection />
 
       {/* CTA Final */}
-      <Section className="bg-gradient-to-br from-primary to-primary-dark text-white">
+      <Section className="bg-gradient-to-b from-primary to-primary-dark text-white">
         <div className="text-center max-w-3xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-extrabold mb-4">
             Prêt à adopter ?
           </h2>
           <p className="text-lg mb-8 text-white/95">
-            Contactez-nous pour plus d'informations ou pour organiser une visite.
-            Nous serons ravis de vous aider à trouver votre compagnon idéal !
+            Contactez-moi pour plus d'informations ou pour organiser une visite.
+            Je serai ravi de vous aider à trouver votre compagnon idéal !
           </p>
           <Button 
             href="/contact" 
             variant="primary" 
             className="bg-primary text-primary hover:bg-accent-light font-bold shadow-xl hover:scale-105 transition-transform"
           >
-            📧 Nous contacter maintenant
+            Me contacter maintenant
           </Button>
         </div>
       </Section>

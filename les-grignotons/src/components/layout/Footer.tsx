@@ -28,8 +28,8 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/conseils" className="text-gray-300 hover:text-primary transition">
-                  Conseils & Guides
+                <Link href="/adoptants" className="text-gray-300 hover:text-primary transition">
+                  Conseils aux adoptants
                 </Link>
               </li>
               <li>
@@ -51,7 +51,6 @@ export default function Footer() {
             <ul className="space-y-2 text-sm text-gray-300">
               <li>📧 pirard.laure@skynet.be</li>
               <li>📞 GSM 0476/74.21.93</li>
-              <li>📞 Fixe 010/84.30.17</li>
               <li>📍 Belgique, Brabant Wallon</li>
             </ul>
           </div>

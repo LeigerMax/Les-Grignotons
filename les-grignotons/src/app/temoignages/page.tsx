@@ -32,7 +32,7 @@ export default async function TestimonialsPage() {
   return (
     <main>
       {/* Hero */}
-      <Section className="bg-gradient-to-br from-primary/10 to-accent/10 py-12">
+      <Section className="bg-gradient-to-b from-primary/10 to-accent/10 py-12">
         <div className="text-center">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             Témoignages

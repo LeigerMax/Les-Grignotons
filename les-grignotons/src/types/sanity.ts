@@ -43,6 +43,23 @@ export interface Category extends SanityDocument {
   animalCount?: number
 }
 
+// Parent information
+export interface ParentInfo {
+  type: 'reference' | 'manual'
+  reference?: {
+    _id: string
+    name: string
+    species: string
+    category: {
+      name: string
+      slug: {
+        current: string
+      }
+    }
+  }
+  name?: string
+}
+
 // Animal
 export interface Animal extends SanityDocument {
   _type: 'animal'
@@ -56,10 +73,13 @@ export interface Animal extends SanityDocument {
     }
   }
   sex: 'Male' | 'Femelle'
-  birthDate: string
-  description: string
+  animalType: 'reproducteur' | 'adoption'
+  birthDate?: string
+  description?: string
   image: SanityImage
   status: 'Disponible' | 'Réservé' | 'Adopté'
+  father?: ParentInfo
+  mother?: ParentInfo
 }
 
 // Témoignage
