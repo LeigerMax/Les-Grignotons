@@ -87,7 +87,7 @@ export default function AnimalCard({ animal }: AnimalCardProps) {
           {hasParents && (
             <div className="pt-2 border-t border-gray-200 mt-2">
               <p className="font-semibold text-gray-700 mb-1">Parents :</p>
-              {hasFather && (
+              {hasFather && animal.father && (
                 <div className="flex items-center gap-2">
                   <span>👨 Père :</span>
                   {animal.father.type === 'reference' && animal.father.reference ? (
@@ -103,7 +103,7 @@ export default function AnimalCard({ animal }: AnimalCardProps) {
                   )}
                 </div>
               )}
-              {hasMother && (
+              {hasMother && animal.mother && (
                 <div className="flex items-center gap-2">
                   <span>👩 Mère :</span>
                   {animal.mother.type === 'reference' && animal.mother.reference ? (
