@@ -1,14 +1,13 @@
 import { MetadataRoute } from 'next'
-import { getAnimals, getArticles, getCategories } from '@/lib/sanity/queries'
+import { getAnimals, getCategories } from '@/lib/sanity/queries'
 import { SITE_CONFIG } from '@/lib/config/site'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = SITE_CONFIG.url
 
   // Récupérer toutes les données dynamiques
-  const [animals, articles, categories] = await Promise.all([
+  const [animals, categories] = await Promise.all([
     getAnimals(),
-    getArticles(),
     getCategories(),
   ])
 
@@ -27,16 +26,52 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.9,
     },
     {
+      url: `${baseUrl}/adoption/lapins`,
+      lastModified: new Date(),
+      changeFrequency: 'daily',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/adoption/cobayes`,
+      lastModified: new Date(),
+      changeFrequency: 'daily',
+      priority: 0.9,
+    },
+    {
       url: `${baseUrl}/categories`,
       lastModified: new Date(),
       changeFrequency: 'daily',
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/conseils`,
+      url: `${baseUrl}/adoptants`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/conseils-aux-adoptants-pour-les-lapins`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/conseils-aux-adoptants-pour-les-cobayes`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/race-et-couleurs-les-lapins`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.7,
+    },
+    {
+      url: `${baseUrl}/race-et-couleurs-les-cobayes`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.7,
     },
     {
       url: `${baseUrl}/temoignages`,
@@ -63,16 +98,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   })
 
-  // Pages dynamiques - Articles
-  const articlePages: MetadataRoute.Sitemap = articles.map((article) => {
-    const lastModified = article._updatedAt ? new Date(article._updatedAt) : new Date()
-    return {
-      url: `${baseUrl}/conseils/${article.slug.current}`,
-      lastModified: isNaN(lastModified.getTime()) ? new Date() : lastModified,
-      changeFrequency: 'weekly' as const,
-      priority: 0.7,
-    }
-  })
-
-  return [...staticPages, ...categoryPages, ...articlePages]
+  return [...staticPages, ...categoryPages]
 }

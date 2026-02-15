@@ -4,8 +4,10 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { getCategoryBySlug, getAnimalsByCategory, getCategories } from '@/lib/sanity/queries'
 import { getOptimizedImageUrl } from '@/lib/sanity/client'
+import { getHardcodedColors, isUnderConstruction } from '@/lib/data/colors'
 import Section from '@/components/ui/Section'
 import CategoryAnimalsClient from '@/components/categories/CategoryAnimalsClient'
+import ColorCard from '@/components/ui/ColorCard'
 import { BreadcrumbSchema } from '@/components/seo/JsonLd'
 import AnimalWarning from '@/components/ui/AnimalWarning'
 import { getPageUrl, SITE_CONFIG } from '@/lib/config/site'
@@ -67,7 +69,14 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
     notFound()
   }
 
-  const animals = await getAnimalsByCategory(slug)
+  // Catégories de cobayes qui affichent les couleurs hardcodées
+  const colorCategories = ['peruviens', 'teddys-suisses', 'poils-courts', 'alpaga']
+  const showColors = colorCategories.includes(slug)
+  const underConstruction = isUnderConstruction(slug)
+
+  // Récupérer soit les couleurs hardcodées, soit les animaux
+  const colors = showColors ? getHardcodedColors(slug) : []
+  const animals = !showColors ? await getAnimalsByCategory(slug) : []
 
   const imageUrl = category.image?.asset?.url 
     ? getOptimizedImageUrl(category.image.asset.url, 1200, 600)
@@ -85,7 +94,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
       />
 
       {/* Hero avec image de catégorie */}
-      <Section className="bg-gradient-to-br from-primary to-accent text-white">
+      <Section className="bg-gradient-to-b from-primary to-beige text-white">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
           {/* Texte */}
           <div>
@@ -135,21 +144,58 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         </div>
       </Section>
 
-      {/* Liste des animaux avec filtres */}
+      {/* Liste des couleurs ou animaux */}
       <Section>
         <div className="mb-8">
           <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-2">
-            Nos {category.name.toLowerCase()}
+            {showColors ? 'Couleurs travaillées' : `Nos ${category.name.toLowerCase()}`}
           </h2>
           <p className="text-lg text-gray-600">
-            {animals.length === 0 
-              ? 'Aucun animal disponible dans cette catégorie pour le moment.' 
-              : `${animals.length} animal${animals.length > 1 ? 'aux' : ''} dans cette catégorie`}
+            {showColors ? (
+              underConstruction ? (
+                <span className="inline-flex items-center gap-2 text-orange-600 font-semibold">
+                  🚧 Page en construction - Les couleurs seront bientôt disponibles
+                </span>
+              ) : colors.length === 0 ? (
+                'Aucune couleur disponible pour le moment.'
+              ) : (
+                `${colors.length} couleur${colors.length > 1 ? 's' : ''} travaillée${colors.length > 1 ? 's' : ''}`
+              )
+            ) : (
+              animals.length === 0 
+                ? 'Aucun animal disponible dans cette catégorie pour le moment.' 
+                : `${animals.length} anim${animals.length > 1 ? 'aux' : 'al'} dans cette catégorie`
+            )}
           </p>
         </div>
 
-        {animals.length > 0 && (
-          <CategoryAnimalsClient animals={animals} />
+        {showColors ? (
+          underConstruction ? (
+            // Message de construction
+            <div className="text-center py-16 bg-amber-50 rounded-xl border-2 border-amber-200">
+              <div className="text-6xl mb-4">🚧</div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                Page en construction
+              </h3>
+              <p className="text-lg text-gray-600">
+                Les couleurs travaillées pour cette catégorie seront bientôt disponibles.
+                <br />
+                Revenez nous voir prochainement !
+              </p>
+            </div>
+          ) : colors.length > 0 ? (
+            // Afficher les couleurs hardcodées
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {colors.map((color, index) => (
+                <ColorCard key={index} color={color} />
+              ))}
+            </div>
+          ) : null
+        ) : (
+          // Afficher les animaux avec filtres
+          animals.length > 0 && (
+            <CategoryAnimalsClient animals={animals} />
+          )
         )}
       </Section>
 

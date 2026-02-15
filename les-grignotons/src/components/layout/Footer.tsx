@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import CertificateModal from './CertificateModal'
 
 export default function Footer() {
   return (
@@ -11,6 +12,9 @@ export default function Footer() {
             <p className="text-sm text-gray-300">
               Élevage familial de lapins et cobayes, avec passion et respect du bien-être animal.
             </p>
+            <div className="flex justify-center items-center mb-2">
+            <CertificateModal />
+          </div>
           </div>
 
           {/* Navigation */}
@@ -28,8 +32,8 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/conseils" className="text-gray-300 hover:text-primary transition">
-                  Conseils & Guides
+                <Link href="/adoptants" className="text-gray-300 hover:text-primary transition">
+                  Conseils aux adoptants
                 </Link>
               </li>
               <li>
@@ -51,13 +55,21 @@ export default function Footer() {
             <ul className="space-y-2 text-sm text-gray-300">
               <li>📧 pirard.laure@skynet.be</li>
               <li>📞 GSM 0476/74.21.93</li>
-              <li>📞 Fixe 010/84.30.17</li>
               <li>📍 Belgique, Brabant Wallon</li>
             </ul>
           </div>
         </div>
 
         <div className="border-t border-gray-700 mt-8 pt-8 text-center text-sm text-gray-400">
+          <div className="flex flex-wrap justify-center gap-4 mb-3">
+            <Link href="/mentions-legales" className="hover:text-primary transition">
+              Mentions légales
+            </Link>
+            <span className="text-gray-600">|</span>
+            <Link href="/politique-de-confidentialite" className="hover:text-primary transition">
+              Politique de confidentialité
+            </Link>
+          </div>
           <p>&copy; {new Date().getFullYear()} Les Grignotons. Tous droits réservés.</p>
         </div>
       </div>

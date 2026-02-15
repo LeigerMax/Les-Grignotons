@@ -23,6 +23,29 @@ export default defineType({
       validation: (Rule) => Rule.required().error('Le slug est obligatoire'),
     }),
     defineField({
+      name: 'type',
+      title: 'Type d\'animal',
+      type: 'string',
+      description: 'Sélectionnez le type d\'animal pour cette catégorie',
+      options: {
+        list: [
+          { title: 'Lapin', value: 'lapin' },
+          { title: 'Cobaye', value: 'cobaye' },
+          { title: 'Autre animal', value: 'autre' },
+        ],
+        layout: 'radio',
+      },
+      validation: (Rule) => Rule.required().error('Le type d\'animal est obligatoire'),
+      initialValue: 'lapin',
+    }),
+    defineField({
+      name: 'hidden',
+      title: 'Masquer cette catégorie',
+      type: 'boolean',
+      description: '⚠️ Si activé, cette catégorie sera invisible sur le site et tous les animaux associés seront également cachés',
+      initialValue: false,
+    }),
+    defineField({
       name: 'description',
       title: 'Description',
       type: 'text',
@@ -52,11 +75,15 @@ export default defineType({
       title: 'name',
       subtitle: 'description',
       media: 'image',
+      type: 'type',
+      hidden: 'hidden',
     },
-    prepare({ title, subtitle, media }) {
+    prepare({ title, subtitle, media, type, hidden }) {
+      const typeLabel = type === 'lapin' ? '🐰 Lapin' : type === 'cobaye' ? '🐹 Cobaye' : '🐾 Autre'
+      const hiddenLabel = hidden ? '🚫 MASQUÉ' : ''
       return {
-        title,
-        subtitle: subtitle ? `${subtitle.substring(0, 60)}...` : '',
+        title: `${hiddenLabel} ${title}`.trim(),
+        subtitle: `${typeLabel} - ${subtitle ? subtitle.substring(0, 50) + '...' : ''}`,
         media,
       }
     },
@@ -71,6 +98,11 @@ export default defineType({
       title: 'Nom (A-Z)',
       name: 'nameAsc',
       by: [{ field: 'name', direction: 'asc' }],
+    },
+    {
+      title: 'Type d\'animal',
+      name: 'typeAsc',
+      by: [{ field: 'type', direction: 'asc' }],
     },
   ],
 })

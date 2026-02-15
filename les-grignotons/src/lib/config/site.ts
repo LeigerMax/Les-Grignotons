@@ -14,6 +14,12 @@ export const SITE_CONFIG = {
   email: 'pirard.laure@skynet.be',
   phone: '0476/74.21.93',
   
+  // Informations légales
+  responsable: 'Laure Pirard',
+  address: 'Rue du Pisselet 21, 1390 Grez-Doiceau',
+  bce: 'BE0685592436',
+  agrement: 'HK55220001',
+  
   // Réseaux sociaux
   social: {
     facebook: 'https://facebook.com/',

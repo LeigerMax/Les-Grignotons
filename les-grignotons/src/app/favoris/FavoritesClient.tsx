@@ -51,7 +51,7 @@ export default function FavoritesClient() {
   if (!isLoaded || loading) {
     return (
       <main>
-        <Section className="bg-gradient-to-br from-primary/10 to-accent/10 py-12">
+        <Section className="bg-gradient-to-b from-primary/10 to-accent/10 py-12">
           <div className="text-center">
             <div className="animate-pulse">
               <div className="h-12 bg-gray-300 rounded w-64 mx-auto mb-4"></div>
@@ -77,7 +77,7 @@ export default function FavoritesClient() {
   return (
     <main>
       {/* Hero */}
-      <Section className="bg-gradient-to-br from-primary/10 to-accent/10 py-12">
+      <Section className="bg-gradient-to-b from-primary/10 to-accent/10 py-12">
         <div className="text-center">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             Mes Favoris ❤️
