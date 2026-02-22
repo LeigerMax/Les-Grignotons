@@ -102,7 +102,7 @@ export default async function AdoptionCobayesPage() {
                 <h3 className="font-bold text-gray-900 text-lg">Disponibilité</h3>
               </div>
               <p className="text-gray-700">
-                Les cobayes sont disponibles à l'adoption dès qu'ils atteignent l'âge de sevrage. Les dates sont indiquées sur chaque fiche.
+                Les cobayes sont disponibles à l'adoption dès qu'ils atteignent l'âge de sevrage.
               </p>
             </div>
           </div>
@@ -164,7 +164,7 @@ export default async function AdoptionCobayesPage() {
           </h2>
           <p className="text-lg text-gray-600 text-center max-w-2xl mx-auto">
             {adoptionCobayes.length === 0 
-              ? 'Aucun cobaye disponible à l\'adoption pour le moment. Revenez bientôt !' 
+              ? "Nous avons régulièrement une multitude de cobayes à l'adoption. N'hésitez pas à nous contacter pour connaître les disponibilités actuelles !" 
               : `${adoptionCobayes.length} cobaye${adoptionCobayes.length > 1 ? 's' : ''} disponible${adoptionCobayes.length > 1 ? 's' : ''} à l'adoption`}
           </p>
         </div>

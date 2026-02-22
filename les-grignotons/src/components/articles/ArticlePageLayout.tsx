@@ -65,6 +65,12 @@ export async function ArticlePageLayout({
       {/* Titre */}
 
         <div className="max-w-4xl mx-auto">
+          {/* Bouton retour en haut */}
+          <div className="mb-4">
+            <Button href={finalBackButton.href} variant="outline">
+              {finalBackButton.label}
+            </Button>
+          </div>
           <h1 className="text-4xl md:text-6xl font-extrabold  mb-6 drop-shadow-lg">
             {article.title}
           </h1>

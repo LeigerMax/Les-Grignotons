@@ -102,7 +102,7 @@ export default async function AdoptionLapinsPage() {
                 <h3 className="font-bold text-gray-900 text-lg">Disponibilité</h3>
               </div>
               <p className="text-gray-700">
-                Les lapins sont disponibles à l'adoption dès qu'ils atteignent l'âge de sevrage. Les dates sont indiquées sur chaque fiche.
+                Les lapins sont disponibles à l'adoption dès qu'ils atteignent l'âge de sevrage.
               </p>
             </div>
           </div>
