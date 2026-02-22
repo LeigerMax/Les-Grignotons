@@ -76,7 +76,8 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
 
   // Récupérer soit les couleurs hardcodées, soit les animaux
   const colors = showColors ? getHardcodedColors(slug) : []
-  const animals = !showColors ? await getAnimalsByCategory(slug) : []
+  // On ne veut que les reproducteurs
+  const animals = !showColors ? (await getAnimalsByCategory(slug)).filter(a => a.animalType === 'reproducteur') : []
 
   const imageUrl = category.image?.asset?.url 
     ? getOptimizedImageUrl(category.image.asset.url, 1200, 600)
