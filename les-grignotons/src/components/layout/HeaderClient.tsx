@@ -82,7 +82,7 @@ export default function HeaderClient({ categories }: HeaderClientProps) {
           
           <Link 
             href="/adoptants" 
-            className="block px-3 py-2 text-primary font-bold hover:bg-primary/10 rounded-md transition-all"
+            className="block px-3 py-2 text-red-600 font-bold hover:bg-primary/10 rounded-md transition-all"
           >
             Conseils aux adoptants
           </Link>
@@ -227,7 +227,7 @@ export default function HeaderClient({ categories }: HeaderClientProps) {
             
             <Link 
               href="/adoptants" 
-              className="block px-3 py-2 text-primary font-bold hover:bg-primary/10 rounded-md"
+              className="block px-3 py-2 text-red-600 font-bold hover:bg-primary/10 rounded-md"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Conseils aux adoptants
